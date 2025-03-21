@@ -82,7 +82,6 @@ namespace RailwayBookingProject.Model
                 OnProperyChanged(nameof(Статус));
             }
         }
-      
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnProperyChanged([CallerMemberName] string prop = "")

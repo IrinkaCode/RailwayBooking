@@ -18,7 +18,7 @@ using javax.crypto;
 using sun.security.util;
 namespace RailwayBookingProject.View
 {
-    
+
     public partial class JoinClient : Window
     {
         public JoinClient()
@@ -27,29 +27,16 @@ namespace RailwayBookingProject.View
         }
 
 
-             
-        
-// ...
-
-        
-
-        
-
-
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
             ClientWindow personalAccountWindow = new ClientWindow();
             bool? result = personalAccountWindow.ShowDialog();
-            if(result == true)
+            if (result == true)
             {
                 //добавление данных в БД
                 this.Close();
             }
-
-            
-            
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -58,24 +45,24 @@ namespace RailwayBookingProject.View
         }
 
 
-public string GenerateJwtToken(string userId, string userName, string userRole, string secretKey)
-    {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(secretKey);
-        var tokenDescriptor = new SecurityTokenDescriptor
+        public string GenerateJwtToken(string userId, string userName, string userRole, string secretKey)
         {
-            Subject = new ClaimsIdentity(new[]
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secretKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Subject = new ClaimsIdentity(new[]
+                {
             new Claim(ClaimTypes.NameIdentifier, userId),
             new Claim(ClaimTypes.Name, userName),
             new Claim(ClaimTypes.Role, userRole)
         }),
-            Expires = DateTime.UtcNow.AddHours(1), 
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
-    }
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
 
-}
+    }
 }
